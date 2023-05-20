@@ -1,36 +1,34 @@
-import { useEffect, useState } from "react";
-import { useContexto } from "../../hooks";
-import axios from "axios";
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
+import { Conteudo, TeamContainer, Titulo } from '../../styles/theme'
 
-export default function Right(){
+export function Right() {
     const [teams, setTeams] = useState([])
 
     useEffect(() => {
         axios.get(`http://localhost:3004/team`).then((res: any) => {
-            setTeams(res.data.sort((time1: any, time2: any) => {
-                const value1 = time1.name.toLowerCase();
-                const value2 = time2.name.toLowerCase();
-                return value1.localeCompare(value2);
+            setTeams(res.data.sort((a: any, b: any) => {
+                const valueA = a.name.toLowerCase();
+                const valueB = b.name.toLowerCase();
+
+                return valueA.localeCompare(valueB);
             }
             ))
         })
     })
 
-    return(
-        <>
-            <div>
-                <b>
-                    <h1>TIMES</h1>
-                    <hr/>
-                </b>
-                {teams.map((team:any)=>(
-                    <>
-                        <p key={team.id}>{team.name}</p>
-                        <hr/>
-                    </>
+    return (
+        <div>
+            <Titulo>Times</Titulo>
+
+            <TeamContainer>
+                {teams.map((team: any) => (
+                    <div key={team.id}>
+                        <Conteudo>{team.name}</Conteudo>
+                    </div>
                 ))}
-            </div>
-        </>
+            </TeamContainer>
+        </div>
     )
 }

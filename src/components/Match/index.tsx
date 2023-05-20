@@ -1,29 +1,40 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
+import { format, parseISO } from 'date-fns';
+import axios from 'axios'
 
+import { Conteudo, ConteudoMatch, TeamContainer, ContainerMatch, MatchContainer, X, MatchCont } from '../../styles/theme';
 
-export default function Match(){
+export function Match() {
     const [matches, setMatches] = useState([])
 
     useEffect(() => {
         axios.get(`http://localhost:3004/match`).then((res: any) => {
-            setMatches(res.data.sort((time1: any, time2: any, data:any) => {
-                const value1 = time1.host.name;
-                const value2 = time2.visitor.name;
-                const date = data;
-            }
-            ))
+            const sortedMatches = res.data.sort((a: any, b: any) => {
+                const dateA = parseISO(a.date);
+                const dateB = parseISO(b.date);
+
+                return dateA.getTime() - dateB.getTime();
+            });
+
+            const formattedMatches = sortedMatches.map((match: any) => ({
+                ...match,
+                date: format(parseISO(match.date), 'dd/MM/yyyy'),
+            }));
+
+            setMatches(formattedMatches);
         })
     })
 
-    return(
-        <>
-            {matches.map((match:any)=>(
-                <div className="match" key={match.id}>
-                    <h4>{match.host.name} x {match.visitor.name}</h4>
-                    <p className="data">{match.date}</p>
-                </div>
-            ))}
-        </>
+    return (
+        <TeamContainer>
+            <MatchContainer>
+                {matches.map((match: any) => (
+                    <ContainerMatch key={match.id}>
+                            <ConteudoMatch>{`${match.host.name}`} <X>X</X> {`${match.visitor.name}`}</ConteudoMatch>
+                        <ConteudoMatch>{match.date}</ConteudoMatch>
+                    </ContainerMatch>
+                ))}
+            </MatchContainer>
+        </TeamContainer>
     )
 }

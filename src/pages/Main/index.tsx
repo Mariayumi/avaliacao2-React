@@ -1,18 +1,37 @@
-import { fifa } from "../../assets";
-import Left from "../../components/Left";
-import Right from "../../components/Right";
-import "../../styles/style.css"
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-export default function Main(){
-    return(
+// styles ✨
+import { ButtonTheme, Header, Logo, MainContainer, SubContainer } from '../../styles/theme'
+import '../../styles/style.css'
+
+// components ✨
+import { Right } from '../../components/Right'
+import { Left } from '../../components/Left'
+import { CgDarkMode } from 'react-icons/cg'
+import { fifa } from '../../assets'
+
+export function Main() {
+    const [theme, setTheme] = useState('light');
+
+    const ThemeChange = () => {
+        setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    }
+
+    return (
         <>
-        <div className="navbar">
-            <img src={fifa} className="logo"/>
-        </div>
-        <div className="container">
-            <div className="coluna1"><Left/></div>
-            <div className="coluna2"><Right/></div>
-        </div>
+            <Header>
+                <Logo src={fifa} alt="logo" />
+            </Header>
+            <MainContainer theme={theme}>
+                <SubContainer theme={theme}>
+                    <Left />
+                    <Right />
+                    
+                    <div></div>
+                    <CgDarkMode onClick={ThemeChange} />
+                </SubContainer>
+            </MainContainer>
         </>
     )
 }

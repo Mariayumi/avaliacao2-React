@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { TeamProps, MatchProps, ContextProps, ThemeProps } from "../types";
 import Team from "../services/Team";
 import Match from "../services/Match";
-import { light } from "../styles/theme";
+import { Light } from "../styles/theme";
 
 const Contexto = createContext({} as ContextProps);
 
@@ -10,7 +10,7 @@ function Provider({ children }: any) {
   const [team, setTeam] = useState<TeamProps | undefined>();
   const [teams, setTeams] = useState([] as TeamProps[]);
   const [matches, setMatches] = useState([] as MatchProps[]);
-  const [theme, setTheme] = useState<ThemeProps>(light);
+  const [theme, setTheme] = useState<ThemeProps>(Light);
 
   useEffect(() => {
     (async () => {

@@ -1,12 +1,13 @@
-import Match from "../Match";
+import { Match } from  '../Match';
 
-export default function Left(){
-    return(
-        <>
-            <div>
-                <h1 className="titulo">PARTIDAS</h1>
-                <Match/>
-            </div>
-        </>
+import { Titulo, TituloP } from '../../styles/theme';
+
+export function Left () {
+	return (
+        <div>
+            <TituloP>Partidas</TituloP>
+
+            <Match />
+        </div>
     )
 }
