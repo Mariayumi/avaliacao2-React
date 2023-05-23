@@ -28,10 +28,6 @@ export const Logo = styled.img`
     width: 150px;
 `
 
-export const ButtonTheme = styled.button`
-    background-color: "red";
-`
-
 export const MainContainer = styled.div`
     background-color: ${(props => props.theme.background)};
     color: ${(props => props.theme.text)};
