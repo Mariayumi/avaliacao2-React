@@ -25,29 +25,27 @@ export const Header = styled.div`
 export const Logo = styled.img`
     padding-top: 20px;
     padding-bottom: 20px;
-    width: 100px;
+    width: 150px;
 `
 
 export const ButtonTheme = styled.button`
     background-color: "red";
-`   	
+`
 
 export const MainContainer = styled.div`
-    background-color: ${props => props.theme === 'light' ? Light.background : Dark.background};
-    color: ${props => props.theme === 'light' ? Light.text : Dark.text};
+    background-color: ${(props => props.theme.background)};
+    color: ${(props => props.theme.text)};
     padding: 40px;
-    min-width: 90%;
-    @media (max-width: 800px) {
-        min-width: 80%;
-    }
+    min-height: 88vh;
+    min-width: 100%;
 `
 
 export const SubContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 20px;
-    background-color: ${props => props.theme === 'light' ? Light.main : Dark.main};
-    color: ${props => props.theme === 'light' ? Light.text : Dark.text};
+    background-color: ${(props => props.theme.main)};
+    color: ${(props => props.theme.text)};
     border-radius: 5px;
 
     @media (max-width: 800px) {
@@ -62,24 +60,30 @@ export const TeamContainer = styled.div`
 
 export const Titulo = styled.h1`
     margin-top: 10px;
-    color: ${props => props.theme === 'light' ? Light.text : Dark.text};
-    font-size: 1.6rem;
+    color: ${(props => props.theme.text)};
+    font-size: 30px;
 `
 
-export const TituloP = styled.h1`
-    text-align: center;
+export const TituloLeft = styled.h1`
     margin-top: 10px;
-    color: ${props => props.theme === 'light' ? Light.text : Dark.text};
-    font-size: 1.6rem;
+    color: ${(props => props.theme.text)};
+    font-size: 30px;
+    text-align: center;
+`
+
+export const Checkbox = styled.input`
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    color: #0000;
 `
 
 export const Conteudo = styled.p`
-    font-size: 1.2rem;
+    font-size: 18px;
     text-align: justify;
-    color: ${props => props.theme === 'light' ? Light.text : Dark.text};
+    color: ${(props => props.theme.text)};
     border-bottom: 1px solid #ccc;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
 `
 
 export const ConteudoMatch = styled.p`
@@ -88,13 +92,13 @@ export const ConteudoMatch = styled.p`
     justify-content: center;
     text-align: center;
     width: 100%;
-    color: ${props => props.theme === 'light' ? Light.text : Dark.text};
+    font-size: 18px;
+    color: ${(props => props.theme.text)};
     margin-top: 5px;
 `
 
 export const ContainerMatch = styled.div`
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px;
 `
 
 export const MatchContainer = styled.div`
@@ -107,12 +111,11 @@ export const MatchContainer = styled.div`
 
 export const MatchCont = styled.div`
     display: grid;
-    grid-template-columns: 100px 10px 130px;
+    grid-template-columns: 150px 10px 150px;
 `
 
 export const X = styled.span`
     text-align: center;
     font-weight: bold;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin-top: 5px;
 `;

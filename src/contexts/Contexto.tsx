@@ -1,44 +1,47 @@
 import { createContext, useEffect, useState } from "react";
-import { TeamProps, MatchProps, ContextProps, ThemeProps } from "../types";
+import { ITeam, IMatch, ContextProps, ThemeProps } from "../types";
 import Team from "../services/Team";
 import Match from "../services/Match";
-import { Light } from "../styles/theme";
+import { Dark } from "../styles/theme";
+import { ThemeProvider } from "styled-components";
 
 const Contexto = createContext({} as ContextProps);
 
 function Provider({ children }: any) {
-  const [team, setTeam] = useState<TeamProps | undefined>();
-  const [teams, setTeams] = useState([] as TeamProps[]);
-  const [matches, setMatches] = useState([] as MatchProps[]);
-  const [theme, setTheme] = useState<ThemeProps>(Light);
+    const [team, setTeam] = useState<ITeam | undefined>();
+    const [teams, setTeams] = useState([] as ITeam[]);
+    const [filteredTeams, setFilteredTeams] = useState([] as ITeam[]);
+    const [matches, setMatches] = useState([] as IMatch[]);
+    const [theme, setTheme] = useState<ThemeProps>(Dark);
 
-  useEffect(() => {
-    (async () => {
-      const teamReq: TeamProps[] = await Team.get();
-      setTeams(teamReq);
-      console.log(teamReq)
-    })();
-  }, []);
+    useEffect(() => {
+        (async () => {
+            const teamReq: ITeam[] = await Team.getTeams();
+            setTeams(teamReq);
+        })();
+    }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (team !== undefined) {
-        const matchReq: MatchProps[] = await Match.getByTeam(team.id);
-        setMatches(matchReq);
-      } else {
-        const matchReq: MatchProps[] = await Match.get();
-        setMatches(matchReq);
-      }
-    })();
-  }, [team]);
+    useEffect(() => {
+        (async () => {
+            if (team !== undefined) {
+                const matchReq: IMatch[] = await Match.getByTeam(team.id);
+                setMatches(matchReq);
+            } else {
+                const matchReq: IMatch[] = await Match.get();
+                setMatches(matchReq);
+            }
+        })();
+    }, [team]);
 
-  return (
-    <Contexto.Provider
-      value={{ team, teams, matches, theme, setTeam, setTheme }}
-    >
-      {children}
-    </Contexto.Provider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <Contexto.Provider
+                value={{ team, teams, matches, theme, setTeam, setTheme, filteredTeams, setFilteredTeams }}
+            >
+                {children}
+            </Contexto.Provider>
+        </ThemeProvider>
+    );
 }
 
 export { Contexto, Provider };

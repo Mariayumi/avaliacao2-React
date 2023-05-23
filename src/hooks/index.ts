@@ -1,3 +1,4 @@
-import useContexto from "./useContexto";
+import { Contexto, Provider } from "../contexts";
 
-export { useContexto };
+
+export { Contexto, Provider };

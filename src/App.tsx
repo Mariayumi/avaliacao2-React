@@ -1,11 +1,11 @@
-import "@fontsource/roboto";
+import { Provider } from "./contexts";
 import { Main } from "./pages/Main";
 
 function App() {
 	return (
-		<>
-      <Main/>
-    </>
+		<Provider>
+			<Main />
+		</Provider>
 	);
 }
 

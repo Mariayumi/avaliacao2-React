@@ -1,17 +1,43 @@
+import { format, parseISO } from "date-fns";
+import { IMatch } from "../types/index";
 import api from "./api";
-import { MatchProps } from "../types";
 
-class Match {
-  async get(): Promise<MatchProps[]> {
-    const { data } = await api.get("/match");
-    return data;
-  }
+class Matches {
+    async get(): Promise<IMatch[]> {
+        const res = await api.get("match");
 
-  async getByTeam(id:number): Promise<MatchProps[]> {
-    const { data } = await api.get(`/match/${id}`);
-    return data;
-  }
+        const sortedMatches = res.data.sort((a: any, b: any) => {
+            const dateA = parseISO(a.date);
+            const dateB = parseISO(b.date);
+            return dateA.getTime() - dateB.getTime();
+        });
+
+        const formattedMatches = sortedMatches.map((match: any) => ({
+            ...match,
+            date: format(parseISO(match.date), "dd/MM/yyyy"),
+        }));
+
+        return formattedMatches;
+    }
+
+    async getByTeam(team_id: number): Promise<IMatch[]> {
+        const res = await api.get(`match/${team_id}`);
+
+        const sortedMatches = res.data.sort((a: any, b: any) => {
+            const dateA = parseISO(a.date);
+            const dateB = parseISO(b.date);
+            return dateA.getTime() - dateB.getTime();
+        });
+
+        const formattedMatches = sortedMatches.map((match: any) => ({
+            ...match,
+            date: format(parseISO(match.date), "dd/MM/yyyy"),
+        }));
+
+        return formattedMatches;
+    }
 }
 
-const match = new Match();
-export default match;
+const matches = new Matches();
+
+export default matches;

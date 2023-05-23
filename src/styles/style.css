@@ -1,4 +1,12 @@
-body {
+* {
+    margin: 0;
+    box-sizing: border-box;
     font-family: "Roboto";
-    margin: 0px;
+}
+
+svg {
+    justify-self: end;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
 }
